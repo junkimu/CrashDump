@@ -21,7 +21,7 @@ public class CrashDump : ModuleRules
             Target.Configuration != UnrealTargetConfiguration.Shipping &&
             Target.Configuration != UnrealTargetConfiguration.Test)
         {
-            PublicDefinitions.Add("WITH_CRASH_DUMP=1");
+            PrivateDefinitions.Add("WITH_CRASH_DUMP=1");
             PrivateDependencyModuleNames.AddRange(new string[] { "Launch" });
 
             string PluginPath = Utils.MakePathRelativeTo(ModuleDirectory, Target.RelativeEnginePath);
@@ -34,7 +34,7 @@ public class CrashDump : ModuleRules
         }
         else
         {
-            PublicDefinitions.Add("WITH_CRASH_DUMP=0");
+            PrivateDefinitions.Add("WITH_CRASH_DUMP=0");
         }
 
     }

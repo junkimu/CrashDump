@@ -3,7 +3,7 @@
 #include "CrashDump.h"
 
 #if PLATFORM_ANDROID
-#if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
+#if WITH_CRASH_DUMP
 
 #include "Android/AndroidJNI.h"
 #include "Android/AndroidApplication.h"
@@ -12,14 +12,13 @@
 #include "client/linux/handler/exception_handler.h"
 #include "client/linux/handler/minidump_descriptor.h"
 
-#endif
-#endif
+#endif // WITH_CRASH_DUMP
+#endif // PLATFORM_ANDROID
 
 #define LOCTEXT_NAMESPACE "FCrashDumpModule"
 
 #if PLATFORM_ANDROID
-#if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
-
+#if WITH_CRASH_DUMP
 static google_breakpad::ExceptionHandler* exceptionHandler;
 bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor, void* context, bool succeeded)
 {
@@ -35,8 +34,8 @@ extern "C" void Java_com_epicgames_ue4_GameActivity_setUpBreakpad(JNIEnv* env, j
 	exceptionHandler = new google_breakpad::ExceptionHandler(descriptor, NULL, DumpCallback, NULL, true, -1);
 }
 
-#endif
-#endif
+#endif // WITH_CRASH_DUMP
+#endif // PLATFORM_ANDROID
 
 void FCrashDumpModule::StartupModule()
 {
